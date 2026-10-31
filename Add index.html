@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Saathi</title>
+<style>
+body{background:#0b1020;color:white;font-family:Arial;padding:15px}
+.card{background:#19243a;padding:18px;border-radius:12px;margin:15px 0}
+input,select{width:95%;padding:12px;margin:7px 0;background:#263650;color:white;border:0;border-radius:7px}
+button{padding:13px;background:#16a36b;color:white;border:0;border-radius:8px}
+</style>
+</head>
+<body>
+<h2>📊 Stock Saathi Crypto</h2>
+<div class="card">
+<h3>Trade Calculator</h3>
+<label>Margin (USDT)</label>
+<input id="m" type="number" value="50">
+<label>Leverage</label>
+<input id="l" type="number" value="20">
+<label>Entry Price</label>
+<input id="a" type="number" value="100">
+<label>Exit Price</label>
+<input id="b" type="number" value="110">
+<label>Trade</label>
+<select id="s"><option value="1">LONG</option><option value="-1">SHORT</option></select>
+<label>Fee per side (%)</label>
+<input id="f" type="number" value="0.05">
+<button onclick="go()">Calculate P&L</button>
+<h3 id="out">Result यहाँ आएगा</h3>
+</div>
+<script>
+function go(){
+let m=+document.getElementById('m').value;
+let l=+document.getElementById('l').value;
+let a=+document.getElementById('a').value;
+let b=+document.getElementById('b').value;
+let s=+document.getElementById('s').value;
+let f=+document.getElementById('f').value/100;
+if(m<=0||l<=0||a<=0||b<=0||f<0){alert('Sahi values bharo');return}
+let size=m*l;
+let qty=size/a;
+let gross=size*(b-a)/a*s;
+let fees=(size+qty*b)*f;
+let net=gross-fees;
+document.getElementById('out').innerHTML=
+'Position: '+size.toFixed(2)+' USDT<br>'+
+'Gross P&L: '+gross.toFixed(2)+' USDT<br>'+
+'Estimated Fees: '+fees.toFixed(2)+' USDT<br>'+
+'Net P&L: '+net.toFixed(2)+' USDT';
+}
+</script>
+</body>
+</html>
